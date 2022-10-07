@@ -1,0 +1,390 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2D7DFF;
+}
+
+body {
+    background: linear-gradient(220deg, rgba(189,0,255,1) 0%, rgba(0,163,255,1) 100%);
+    height: 100vh;
+    background-attachment: fixed;
+    font-family: 'Poppins';
+    overflow: hidden;
+}
+
+/* tooltips */
+.tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: #c052ff;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: .5em;
+    position: absolute;
+    z-index: 1;
+    text-transform: none;
+    font-weight: 400;
+    text-align: left;
+}
+
+nav ul li a .tooltiptext {
+    white-space: normal;
+    left: 12em;
+}
+
+.btn .tooltiptext {
+    left: 0;
+    top: 3em;
+}
+
+.previousBtn .tooltiptext {
+    left: -3em;
+    top: 3em;
+    width: 250px;
+}
+
+.nextBtn .tooltiptext {
+    left: -10em;
+    top: 3em;
+    width: 250px;
+}
+  
+a:hover .tooltiptext,
+a:focus .tooltiptext {
+    visibility: visible;
+}
+
+button:hover .tooltiptext,
+button:focus .tooltiptext {
+    visibility: visible;
+}
+/* end */
+
+
+#app {
+    height: 100vh;
+}
+
+.container {
+    margin: 1em .5em;
+    height: calc(100% - 2em);
+}
+
+section {
+    background: #221F26 url('./img/online.jpg');
+    background-size: cover;
+    background-blend-mode: screen;
+    height: 100%;
+    padding: 2em;
+    border-radius: 13px;
+}
+
+.logo {
+    color: var(--primary-color);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+}
+
+.menu-btn {
+    cursor: pointer;
+}
+
+.title {
+    font-size: clamp(2.5rem, -0.875rem + 8.333vw, 4rem);
+    font-weight: 800;
+    color: white;
+    line-height: 89%;
+}
+
+.cv {
+    display: grid;
+    place-items: center;
+    height: 80%;
+}
+
+.main-box {
+    height: calc(100% - 2em);
+    overflow: auto;
+    background-color: #00000080;
+    color: #e7e7e7;
+    padding: 1em;
+    border-radius: 13px;
+    margin-top: 1em;
+}
+
+.content .subtitle {
+    font-size: clamp(1.2rem, -0.875rem + 8.333vw, 1.6rem);
+    font-weight: 400;
+    background-color: #0000005e;
+    line-height: 111%;
+    color: #f2a8ff;
+    margin-top: 1em;
+    padding: .5em;
+}
+
+.content p {
+    line-height: 150%;
+}
+
+#library::after {
+    content: '';
+    display: block;
+    width: 4em;
+    height: 1px;
+    margin: 0.5em auto 1em;
+    background: white;
+    opacity: 0.5;
+}
+
+input[type="file"] {
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0; 
+    bottom: 0;
+}
+
+.btn {
+    color: white;
+    background-color: #00000030;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 1em;
+    display: inline-block;
+    border: 1px solid #e7e7e7;
+    padding: 1.25em 1.25em 1.25em calc(2.5em + 1.5em);
+    position: relative;
+    cursor: pointer;
+}
+
+.btn:before {
+    content: '';
+    position: absolute;
+    background: url('./assets/arrow.svg') no-repeat;
+    width: 1.5em;
+    height: 1.5em;
+    left: 1.25em;
+}
+
+.btn:hover,
+.btn:focus {
+    background: var(--primary-color);
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 3em;
+}
+
+.controlBtn {
+    cursor: pointer;
+    background-color: #ffffff82;
+    border: 1px solid #e7e7e7;
+    border-radius: 50%;
+    position: relative;
+}
+
+.controlBtn:hover,
+.controlBtn:focus {
+    background-color: var(--primary-color);
+    border-color: black;
+}
+
+.btn-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+nav {
+    position: fixed;
+    z-index: 1;
+    background: #2C2931;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    max-width: 300px;
+    transform: translateX(-100%);
+    transition: transform .3s;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+nav ul li {
+    width: 100%;
+}
+
+nav ul li a {
+    text-decoration: none;
+    white-space: nowrap;
+    color: white;
+    display: block;
+    padding: .875em 5em .875em 4em;
+}
+
+nav ul li a:hover {
+    background: #413E47;
+}
+
+.back-btn {
+    transform: scaleX(-1);
+    padding: 3em 4em 2em;
+    cursor: pointer;
+    transition: transform .3s;
+}
+
+.back-btn:hover {
+    transform: scaleX(-1) translateX(6px);
+}
+
+.active  {
+    background: var(--primary-color);
+}
+
+.active:hover  {
+    background: #4497FF;
+}
+
+
+/* section */
+
+.section-title {
+    font-size: clamp(1.7rem, -0.875rem + 8.333vw, 2.5rem);
+    font-weight: bold;
+    line-height: 111%;
+    color: #e7e7e7;
+}
+
+.map-img {
+    margin: 0 auto;
+}
+
+.map-img img {
+    width: 100%;
+}
+
+.properties {
+    margin-top: 0;
+}
+
+/* about */
+.about-me {
+    margin-top: 2em;
+}
+
+.me-intro {
+    display: flex;
+    column-gap: 2em;
+    justify-content: space-around;
+}
+
+.img-box {
+    width: 50%;
+}
+
+.me-img {
+    width: 100%;
+}
+
+.intro {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.other {
+    margin-top: 2em;
+}
+
+.other h3 {
+    color: var(--primary-color);
+}
+
+@media only screen and (min-width: 700px) {
+    .left-col {
+        display: flex;
+    }
+    
+    .content .subtitle {
+        width: 75%;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+}
+
+
+@media only screen and (min-width: 1300px) {
+    nav {
+        position: unset;
+        transform: translateX(0) !important;
+        border-radius: unset;
+        border-top-left-radius: 13px;
+        border-bottom-left-radius: 13px;
+        height: 100%;
+    }
+    
+    .menu-btn, .back-btn {
+        display: none;
+    }
+    
+    ul {
+        margin-top: 4em;
+    }
+
+    header {
+        padding: 1.6em;
+    }
+
+    .container {
+        display: flex;
+        padding: 2em;
+    }
+
+    .logo {
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 0;
+    }
+    
+    section {
+        border-radius: unset;
+        border-top-right-radius: 13px;
+        border-bottom-right-radius: 13px;
+        width: 100%;
+        background-size: cover;
+        background-position: 0;
+        background-attachment: unset;
+    }
+    
+    .content {
+        justify-self: left;
+        margin-left: 4em;
+        margin-right: 4em;
+    }
+
+    .main-box {
+        height: 85%;
+        margin-top: 0;
+    }
+
+}

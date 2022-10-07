@@ -1,0 +1,37 @@
+{
+    "title": "A Dream of Splendor（梦华录）",
+    "iframeVideoUrl": "https://www.youtube.com/embed/rqsJnjYm4KI?enablejsapi=1",
+    "videoImage": "img/梦华录.jpeg",
+    "level": "Intermediate",
+    "jsonData": [{
+        "timestamp": 290,
+        "question": "你这个活阎罗果然名不虚传啊",
+        "answers": ["are worthy of your reputation", "are well-deserved reputation", "are worthy of the name"],
+        "correctAnswer": 0,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 723,
+        "question": "说正事",
+        "answers": ["get down to business", "say something right", "talk proper things"],
+        "correctAnswer": 0,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 756,
+        "question": "把事情搞大",
+        "answers": ["make things bigger", "make it serious", "make a scene"],
+        "correctAnswer": 2,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 1221,
+        "question": "只怕我会上吐下泻",
+        "answers": ["I'll be very sick with diarrhea and vomiting.", "I would vomit and have diarrhea.", "I feel like vomiting and have got a run."],
+        "correctAnswer": 0,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 2145,
+        "question": "你怎么知道他娶你不是别有用心",
+        "answers": ["he has other thoughts", "he has no ulterior motives", "he isn't up to something else"],
+        "correctAnswer": 2,
+        "gradingWeights": 20
+    }]
+}

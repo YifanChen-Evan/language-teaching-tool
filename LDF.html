@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Language Teaching Tool</title>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+    <link type="text/css" href="index.css" rel="stylesheet">
+    <link type="text/css" href="quizStyle.css" rel="stylesheet">
+    <!-- import Vue -->
+    <script type="text/javascript" src="vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700;800&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+      <div class="container">
+        <div class="left-col">
+            <nav>
+                <img src="assets/arrow.svg" class="back-btn">
+                <ul class="nav__list">
+                  <li class="nav__item"><a href="index.html" class="nav__link"><span class="tooltiptext">Start a lesson with your own material (requires external LDF).</span>Home</a></li>
+                  <li class="nav__item" :class="{active: activeShow=='Library'}"><a href="index.html?Library=1" @click="activeShow = 'Library'" class="nav__link"><span class="tooltiptext">Start a sample lesson with material from our library.</span>Get started</a></li>
+                  <li class="nav__item active"><a href="LDF.html" class="nav__link"><span class="tooltiptext">How to create your own lessons for teaching and sharing.</span>LDF</a></li>
+                  <li class="nav__item"><a href="help.html" class="nav__link"><span class="tooltiptext">User guide.</span>Help</a></li>
+                  <li class="nav__item"><a href="about.html" class="nav__link"><span class="tooltiptext">About this website and its author Yifan Chen.</span>About</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <section class="LDF" id="LDF">
+            <header>
+                <img src="assets/menu.svg" class="menu-btn">
+                <a href="index.html" class="logo">Language Comprehension Training</a>
+            </header>
+
+            <div class="main-box">
+              <div class="content">
+                  <h1 class="section-title">Lesson Description File</h1>
+                  <p>The lesson description file (LDF) is a file that stores various attributes of the lesson in json format, including video title, video link, video cover, difficulty level and data related to quiz questions.</p>
+                  <div class="map-img">
+                    <img src="img/Lesson Description File.png">
+                  </div>
+                  
+                  <div class="step-container">
+                    <div>
+                      <h2>"title"</h2>
+                      <p>It refers to the video title.</p>
+                    </div>
+                    
+                    <div>
+                      <h2>"iframeVideoUrl"</h2>
+                      <p>It is used to store external links of embedded video.</p>
+                    </div>
+                    
+                    <div>
+                      <h2>"videoImage"</h2>
+                      <p>You can store the relative/absolute path of the video cover.</p>
+                    </div>
+                    
+                    <div>
+                      <h2>"level"</h2>
+                      <p> It refers to the overall difficulty level of the quiz questions in the video. Its value can be "Beginner", "Intermediate" or "Advanced".</p>
+                    </div>
+                    
+                    <div>
+                      <h2>"jsonData"</h2>
+                      <p>It stores 5 properties describing each quiz question.</p>
+                      <ul class="properties">
+                        <li>"timestamp"
+                          <p>It is used to set the time point at which the quiz question pops up. Its value is the time in seconds. For example, to set the first quiz question at 4 minutes and 50 seconds, the value of the "timestamp" key would be 290 (60 * 4 + 50 = 290).</p></li>
+                        <li>"question"
+                          <p>It is the question of quiz at the specific timestamp.</p>
+                        </li>
+                        <li>"answers"
+                          <p>The options for the question are stored in the "answer" as an array.</p>
+                        </li>
+                        <li>"correctAnswer"
+                          <p>It is the index of the correct answer in the "answer" array.</p>
+                        </li>
+                        <li>"gradingWeights"
+                          <p>The grading weight for each question can be set individually without having to set the same score for all questions.</p>
+                        </li>
+                      </ul>
+                    </div>
+                    
+                  </div>
+
+                  <a href="help.html" class="btn">How to start a lesson</a>
+              </div>
+            </div>
+        </section>
+      </div>
+      <script src="index.js"></script>
+  </body>
+</html>

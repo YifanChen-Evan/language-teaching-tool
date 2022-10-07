@@ -1,0 +1,37 @@
+{
+    "title": "City of Streamer（流光之城）",
+    "iframeVideoUrl": "https://www.youtube.com/embed/ahXbJ21Jwjc?enablejsapi=1",
+    "videoImage": "img/流光之城.jpeg",
+    "level": "Intermediate",
+    "jsonData": [{
+        "timestamp": 246,
+        "question": "家道中落了",
+        "answers": ["lost money", "lost everything", "are broke"],
+        "correctAnswer": 1,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 272,
+        "question": "我尤其擅长备考",
+        "answers": ["I am particularly good at preparing for exams", "I specialize in exams", "I am a good student"],
+        "correctAnswer": 1,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 791,
+        "question": "见不得光的生意",
+        "answers": ["shady business", "grey business", "shameful business"],
+        "correctAnswer": 0,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 810,
+        "question": "令人发指",
+        "answers": ["outrageous crimes", "scary crimes", "heinous crimes"],
+        "correctAnswer": 2,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 2145,
+        "question": "她的绘画技巧可比我好多了",
+        "answers": ["she outshines me in skills", "she is better at painting", "her skills are better than mine"],
+        "correctAnswer": 0,
+        "gradingWeights": 20
+    }]
+}

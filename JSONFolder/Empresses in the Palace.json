@@ -1,0 +1,37 @@
+{
+    "title": "Empresses in the Palace（甄嬛传）",
+    "iframeVideoUrl": "https://www.youtube.com/embed/QOaXm_9S9_0?enablejsapi=1",
+    "videoImage": "img/甄嬛传.jpeg",
+    "level": "Intermediate",
+    "jsonData": [{
+        "timestamp": 557,
+        "question": "人老了倒也不怕热",
+        "answers": ["Old people are not afraid of heat.", "My aging body is not as sensitive to the heat.", "People are not afraid of heat when they are old."],
+        "correctAnswer": 1,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 972,
+        "question": "我们能白首到老",
+        "answers": ["We will end up old and gray together.", "We can grow old in vain.", "Our happiness increases with age."],
+        "correctAnswer": 0,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 1061,
+        "question": "一片冰心在玉壶",
+        "answers": ["A piece of ice heart in the jade pot.", "This heirloom jade teapot is a symbol of pure love.", "As impeccable as ice is my heart in a jade flask."],
+        "correctAnswer": 1,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 1093,
+        "question": "我保证会一生一世对你好",
+        "answers": ["I promise to be good to you forever.", "I promise to take care of you for the rest of my life.", "I promise to love and cherish you all my life."],
+        "correctAnswer": 2,
+        "gradingWeights": 20
+    }, {
+        "timestamp": 2116,
+        "question": "一件衣裳罢了不值得生气",
+        "answers": ["A dress is not enough to make you be angry.", "A piece of clothing is nothing to be angry with.", "It’s not worthwhile being angry over a dress."],
+        "correctAnswer": 2,
+        "gradingWeights": 20
+    }]
+}

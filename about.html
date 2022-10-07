@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Language Teaching Tool</title>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+    <link type="text/css" href="index.css" rel="stylesheet">
+    <link type="text/css" href="quizStyle.css" rel="stylesheet">
+    <!-- import Vue -->
+    <script type="text/javascript" src="vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700;800&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+      <div class="container">
+        <div class="left-col">
+            <nav>
+                <img src="assets/arrow.svg" class="back-btn">
+                <ul class="nav__list">
+                  <li class="nav__item"><a href="index.html" class="nav__link"><span class="tooltiptext">Start a lesson with your own material (requires external LDF).</span>Home</a></li>
+                  <li class="nav__item" :class="{active: activeShow=='Library'}"><a href="index.html?Library=1" @click="activeShow = 'Library'" class="nav__link"><span class="tooltiptext">Start a sample lesson with material from our library.</span>Get started</a></li>
+                  <li class="nav__item"><a href="LDF.html" class="nav__link"><span class="tooltiptext">How to create your own lessons for teaching and sharing.</span>LDF</a></li>
+                  <li class="nav__item"><a href="help.html" class="nav__link"><span class="tooltiptext">User guide.</span>Help</a></li>
+                  <li class="nav__item active"><a href="about.html" class="nav__link"><span class="tooltiptext">About this website and its author Yifan Chen.</span>About</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <section class="about" id="about">
+            <header>
+                <img src="assets/menu.svg" class="menu-btn">
+                <a href="index.html" class="logo">Language Comprehension Training</a>
+            </header>
+
+            <div class="main-box">
+              <div class="content">
+                  <h1 class="section-title">About</h1>
+                  
+                  <div class="about-container">
+                    <div class="about-app">
+                      <h2>About App</h2>
+                      <p>A language teaching tool that allows users to <strong>customize learning materials</strong> of their own interest using <strong>native language video content</strong> on the YouTube platform, and to improve foreign language proficiency with the aid of <strong>listening comprehension quizzes</strong>.</p>
+
+                      <div class="other">
+                        <h3>👉🏻 Background</h3>
+                        <p>With the rapid growth of the Internet and the increasing demand for second and third languages, more and more people are choosing to use online platforms to learn new languages.</p>
+                        <p>However, the learning resources provided by language learning platforms are limited and cannot meet the specific needs of each learner. Taking learning English as an example, most English learning websites choose to use classic American TV dramas, such as "Friends", "Modern Family", etc., as learning materials.</p>
+                        <p>We have to take into account that not all English language learners enjoy watching American TV shows. For English learners who don't have much interest in American TV series, they may not be able to focus on non-native language videos for long. If they are forced to learn English in this way, it may have the opposite effect, resulting in aversion to English learning. In addition, even for those learners who like to watch American TV series, they will be attracted to the plot to a large extent by learning English only by watching American TV series, rather than focusing on the vocabulary of the character dialogue for the purpose of learning, so It will cause most of the learning time to be wasted and reduce the efficiency of learning.</p>
+                        <p>Thus, providing an opportunity for users to personalize learning resources can ensure that users can learn English actively driven by their interests. Learning resources should not be limited to watching American TV dramas. It is also a good choice to use domestic TV dramas as learning resources to allow users to learn English in a familiar and stress-free language environment. At the same time, inserting quizzes into video viewing can not only test the user's listening comprehension ability, but also effectively prevent them from chasing dramas.</p>
+                      </div>
+
+                      <div class="other">
+                        <h3>👉🏻 Features</h3>
+                        <p>By analyzing the difficulties that Chinese learners generally face in English learning and combining my own experience of learning English, I have given this website two characteristics.</p>
+                        <p>🌟 The website supports user-made learning lessons, which not only allows learners to use their favorite videos as learning materials, but also provides a new teaching method for English teachers without any programming foundation. Teachers can use this website to prepare teaching content and quiz questions.</p>
+                        <p>🌟 The website encourages the use of Chinese TV dramas to learn English, so as to train learners' reaction speed in converting between Chinese and English.</p>
+                      </div>
+                      
+                    </div>
+                    <hr>
+
+                    <div class="about-me">
+                      <h2>About Me</h2>
+                      <div class="me-intro">
+                        <div class="img-box">
+                          <img class="me-img" src="img/Evan01.png" alt="image of Yifan Chen">
+                        </div>
+                        
+                        <div class="intro">
+                          <h3>👧 I'm <strong>Yifan Chen</strong>.</h3>
+                          <h3>🇨🇳 A Chinese girl in Ireland.🇮🇪</h3>
+                        </div>
+                      </div>
+
+                      <div class="other">
+                        <h3>👉🏻 Education</h3>
+                        <p>🎓 I'm currently taking a <strong>MSc Interactive Media</strong> at UCC.</p>
+                        <p>📖 Core courses:</p>
+                        <p><strong>Web Development</strong> (HTML, CSS, JavaScript, PHP, AJAX)</p>
+                        <p><strong>Human-Computer Interaction</strong> (JavaScript)</p>
+                        <p><strong>Graphic Design</strong> (Python, GIMP)</p>
+                        <P><strong>3D Graphics and Modelling</strong> (Blender, three.js, WebGL)</P>
+                        <P><strong>Mobile Multimedia</strong> (Swift)</P>
+                        <P><strong>Authoring</strong> (Processing, Java)</P>
+                        <P><strong>Digtial Video Compression and Delivery</strong> (Python, Matplotlib)</P>
+                        <P><strong>Audio Processing</strong> (Logic Pro, Audacity, miniAudicle)</P>
+                        <p>🎓 My previous major is <strong>Marketing</strong> and I received school-level scholarships for 4 consecutive years.</p>
+                        <p>I participated in various marketing competitions and I did an internship in <strong>Brand Community Operation</strong>, so I accumulated a lot of experience in <strong>social media</strong>, <strong>e-commerce</strong> and <strong>digital marketing</strong>. I pay more attention to <strong>user experience</strong>.</p>
+                      </div>
+
+                      <div class="other">
+                        <h3>👉🏻 Activities & Interests</h3>
+                        <p>🎬 I'm a <strong>Vlogger</strong> recording my daily life and sharing useful tips as an overseas student. </p>
+                        <p>I specialised in <strong>video and audio editing software</strong>, like <strong>Adobe Premiere</strong>, <strong>Final Cut Pro</strong>, <strong>Adobe Audition</strong>, <strong>Logic Pro</strong> and <strong>Audacity</strong>. I've also promoted studying abroad in Ireland as <strong>International Student Ambassador</strong> of “Education in Ireland” since 2021.</p>
+                        <p>I became an <strong>excellent vlogger</strong> and got a <strong>bonus</strong> by filming videos to record daily life and share useful content in Overseas Vlogger Creation Activity of Bilibili in 2021.</p>
+                        <p>🥬 I became an <strong>official certified +V high-quality creator</strong> in the food field by writing blogs, sharing picture and text recipes of nutritious and healthy meals every day since 2020.</p>
+                        <p>🤝 I liaised with Chinese studies clubs outside the university, held networking activities and obtained sponsorship for society activity of Traditional Chinese Medicine Culture Festival as <strong>Minister of Outreach Department of Chinese Culture Learning Association</strong> since 2017-2018.</p>
+                        <p>🏀 I've been playing <strong>basketball</strong> for <strong>10+ years</strong> at <strong>Power Forward</strong> and <strong>Shooting Guard</strong>. As the <strong>leader</strong>, I led the basketball team to the second place many times.</p>
+                        <p>🏓️ I won the second prize of <strong>table tennis</strong> 3v3 team in the university sports meeting in 2017.</p>
+                      </div>
+                    </div>
+                    
+                  </div>
+                    
+              </div>
+            </div>
+        </section>
+      </div>
+      <script src="index.js"></script>
+  </body>
+</html>

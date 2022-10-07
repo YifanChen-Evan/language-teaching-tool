@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Language Teaching Tool</title>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+    <link type="text/css" href="index.css" rel="stylesheet">
+    <link type="text/css" href="quizStyle.css" rel="stylesheet">
+    <!-- import Vue -->
+    <script type="text/javascript" src="vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700;800&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+      <div class="container">
+        <div class="left-col">
+            <nav>
+                <img src="assets/arrow.svg" class="back-btn">
+                <ul class="nav__list">
+                  <li class="nav__item"><a href="index.html" class="nav__link"><span class="tooltiptext">Start a lesson with your own material (requires external LDF).</span>Home</a></li>
+                  <li class="nav__item" :class="{active: activeShow=='Library'}"><a href="index.html?Library=1" @click="activeShow = 'Library'" class="nav__link"><span class="tooltiptext">Start a sample lesson with material from our library.</span>Get started</a></li>
+                  <li class="nav__item"><a href="LDF.html" class="nav__link"><span class="tooltiptext">How to create your own lessons for teaching and sharing.</span>LDF</a></li>
+                  <li class="nav__item active"><a href="help.html" class="nav__link"><span class="tooltiptext">User guide.</span>Help</a></li>
+                  <li class="nav__item"><a href="about.html" class="nav__link"><span class="tooltiptext">About this website and its author Yifan Chen.</span>About</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <section class="help" id="help">
+            <header>
+                <img src="assets/menu.svg" class="menu-btn">
+                <a href="index.html" class="logo">Language Comprehension Training</a>
+            </header>
+
+            <div class="main-box">
+              <div class="content">
+                  <h1 class="section-title">Get Started</h1>
+                  <div class="map-img">
+                    <img src="img/Get Started.png">
+                  </div>
+                  
+                  <div class="step-container">
+                    <h2>Step 1 Load a Local Folder</h2>
+                    <p>In "Home" section, you can click "Start Lessons" button to select the folder stored locally as the source of the json file.</p>
+                    <a href="LDF.html" class="btn">How to write your json file</a>
+                    <h2>Step 2 Select a Video</h2>
+                    <p>Then the json files available in that folder will show up in the "Learning Resource Library". You can see the video title, number of questions and level stored in each json file to choose the learning material that suits you.</p>
+                    <h2>Step 3 Start a Lesson</h2>
+                    <p>After selecting the appropriate learning video, you will be redirected to the "Lesson" page. Now you can enjoy your custom lesson. While watching the video, you need to complete the quiz questions that pop up at specific timestamp.</p>
+                    <h2>Step 4 Get a Quiz Score</h2>
+                    <p>Quiz scores will be announced at the end of the video. Note that you will only receive score if you have completed all of the quiz questions in this lesson.</p>
+                  </div>
+
+                  <a href="about.html" class="btn">Learn more about the app</a>
+              </div>
+            </div>
+        </section>
+      </div>
+      <script src="index.js"></script>
+  </body>
+</html>

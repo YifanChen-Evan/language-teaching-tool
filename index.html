@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Language Teaching Tool</title>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+    <link type="text/css" href="index.css" rel="stylesheet">
+    <link type="text/css" href="quizStyle.css" rel="stylesheet">
+
+    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript" src="axios.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/cdfe2a9cf5.js" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="container">
+        <!-- navigation bar -->
+        <div class="left-col">
+            <nav>
+                <img src="assets/arrow.svg" class="back-btn" alt="back-icon-image">
+                <ul class="nav__list">
+                    <li class="nav__item" :class="{active: activeShow=='Home'}"><a @click="activeShow = 'Home'" href="javascript:;" class="nav__link"><span class="tooltiptext">Start a lesson with your own material (requires external LDF).</span>Home</a></li>
+                    <li class="nav__item" :class="{active: activeShow=='Library'}"><a href="javascript:;" @click="activeShow = 'Library'" class="nav__link"><span class="tooltiptext">Start a sample lesson with material from our library.</span>Get started</a></li>
+                    <li class="nav__item"><a href="LDF.html" class="nav__link"><span class="tooltiptext">How to create your own lessons for teaching and sharing.</span>LDF</a></li>
+                    <li class="nav__item"><a href="help.html" class="nav__link"><span class="tooltiptext">User guide.</span>Help</a></li>
+                    <li class="nav__item"><a href="about.html" class="nav__link"><span class="tooltiptext">About this website and its author Yifan Chen.</span>About</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- main content -->
+        <section class="home" id="home">
+            <header>
+                <img src="assets/menu.svg" class="menu-btn" alt="menu-icon-image">
+                <a href="index.html" class="logo">Language Comprehension Training</a>
+            </header>
+
+            <!-- home page -->
+            <div class="cv" v-if="activeShow == 'Home'">
+              <div class="content">
+                  <h1 class="title">Custom Language Lessons</h1>
+                  <p class="subtitle">Improve your foreign language skills with our listening comprehension quizzes. New quizzes can easily be created from a YouTube URL and a custom-made lesson description file (LDF).</p>
+
+                  <!-- create an input area in home page for users to load a local folder -->
+                  <button class="btn"  @keyup.enter="openInput">
+                      <input type="file" name="file" id="importBtn" @change="httpJSON" webkitdirectory><span class="tooltiptext">Load a local library of lessons. Click to navigate to your folder of LDFs.</span>
+                      Start Lesson
+                  </button>
+
+                  <a href="LDF.html" class="btn"><span class="tooltiptext">How to create your own lessons for teaching and sharing.</span>How to Customize</a>
+              </div>
+            </div>
+
+            <div class="main-box" v-else>
+
+              <!-- embed YouTube video -->
+              <div class="wrapper" v-if="iframeVideoUrl">
+                <h1 class="page-title">{{title}}</h1>
+                <iframe class="iframeVideo" width="560" height="315" :src="iframeVideoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen id="video1"></iframe>
+                <br>
+              </div>
+
+              <!-- previous button and next button -->
+              <div class="control-buttons">
+                <button class="controlBtn previousBtn"  v-if="iframeVideoUrl" @click="selectQuiz(-1)">
+                  <img src="assets/arrow_back.svg" alt="back to previous quiz-icon-image"><span class="tooltiptext">Back to previous question</span>
+                </button>
+                <button class="controlBtn nextBtn"  v-if="iframeVideoUrl" @click="selectQuiz(1)">
+                  <img src="assets/arrow_forward.svg" alt="forward to next quiz-icon-image"><span class="tooltiptext">Forward to next question</span>
+                </button>
+              </div>
+
+              <!-- create an input area in library page for users to load a local folder -->
+              <button class="btn btn-center"  @keyup.enter="openInput">
+                <input type="file" name="file" id="importBtn" @change="httpJSON" webkitdirectory><span class="tooltiptext">Load a local library of lessons. Click to navigate to your folder of LDFs.</span>
+                Start Lesson
+              </button>
+
+              <h1 class="page-title" id="library" :style="!iframeVideoUrl ? '' : 'font-size: 1.5em;'">Learning Resource Library</h1>
+
+              <!-- create a box to display all available json file details -->
+              <div class="dataList">
+                <div tabindex="0" class="dataList-item" :class="activeItem == index ? 'dataList-item-active' : ''" v-for="(item, index) of dataList" :key="index" @click="showItem(item, index)" @keyup.enter="chooseItem">
+                  <div class="item-img">
+                    <img :src="item.videoImage" class="cover" alt="video-cover-image">
+                  </div>
+                  <div class="item-content">
+                    <p>Title: {{item.title}}</p>
+                    <p>Number of Questions: {{item.jsonData.length}}</p>
+                    <p>Level: {{item.level}}</p>
+                  </div>
+                </div>
+              </div>
+        
+              <!-- create a box to show and hide the quiz -->
+              <div id="quiz-panel" v-if="queData.question"> 
+                <div id="quiz-container">
+        
+                  <!-- render question -->
+                  <div id="question" class="question">
+                    {{queData.question}}
+                  </div>
+        
+                  <!-- render options --> 
+                  <div v-for="(item, index) of queData.answers" :key="index" class="options">
+                    <input type="radio" id="opt0" name="options" :value="index" v-model="radio0" >
+                    <span id="optt0">{{item}}</span>
+                  </div>
+        
+                  <!-- render "Continue" button -->
+                  <button class="quizBtn" id="continueBtn" @click="calQueData()">Continue</button>
+                  
+                </div>
+              </div>
+
+              <!-- create a box to review the quiz -->
+              <div id="review-panel" v-if="quizOrder !== -1 && jsonData[quizOrder]"> 
+                <div id="review-container">
+        
+                  <!-- render question -->
+                  <div id="question" class="question">
+                    {{jsonData[quizOrder].question}}
+                  </div>
+        
+                  <!-- render options --> 
+                  <div v-for="(item, index) of jsonData[quizOrder].answers" :key="index" class="options">
+                    <input type="radio" :value="index" disabled :checked="jsonData[quizOrder].selectValue == index || jsonData[quizOrder].correctAnswer == index">
+                    <span id="optt0" v-if="jsonData[quizOrder].selectValue == index && jsonData[quizOrder].correctAnswer == jsonData[quizOrder].selectValue" class="perfectMark">{{item}}</span> <!-- user answered correctly -->
+                    <span id="optt0" v-else-if="jsonData[quizOrder].selectValue == index" class="wrongMark">{{item}}</span> <!-- show the wrong answer that user selected -->
+                    <span id="optt0" v-else-if="jsonData[quizOrder].correctAnswer == index" class="correctMark">{{item}}</span> <!-- show the correct answer -->
+                    <span id="optt0" v-else >{{item}}</span>
+                  </div>
+        
+                  <!-- render "Close" button -->
+                  <button class="quizBtn" id="closeBtn" @click="close()">Close</button>
+                  
+                </div>
+              </div>
+
+              <!-- create a box to show the final score -->
+              <div id="result-panel" style="display:block;" v-if="showResult" @click="showResult = false">
+                <div id="result-container">
+                  <p id="score">Your Score is {{totalScore}} !</p>
+                </div>
+              </div>
+            </div>
+        </section>
+
+        <!-- create a box to confirm if users want to change the current video -->
+        <div id="confirm-panel" v-if="showConfirm"> 
+          <div id="confirm-container">
+            <p>⚠️ Discard the current score to switch video?</p>
+            <div class="quiz-buttons">
+              <button class="quizBtn" @click="goItemCancel()">Cancel</button>
+              <button class="quizBtn" @click="goItemOk()">Discard</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+<!-- -----------------------JavaScript------------------------ -->
+    <script type="text/javascript">
+
+      // define a variable to save the event of onchange, that is, the json file uploaded by the user
+      const importFileJSON = (ev) => {
+        return new Promise((resolve, reject) => {
+          file = ev;
+          console.log(file, "---")
+          // check if the file type uploaded by the user is json
+          if (file.type !== 'application/json') {
+            let obj = {title: file.name, content: "Folder contains non-JSON files."}
+            reject(obj);
+          }
+          // check if the browser supports FileRender
+          if (typeof FileReader === 'undefined') {
+            let obj = {title: file.name, content: "Your browser does not support file uploads."}
+            reject(obj);
+          }
+
+          // read json data
+          const reader = new FileReader();
+          reader.readAsText(file);
+
+          // this event is fired when an error occurs in a read operation
+          reader.onerror = (err) => {
+            reject("JSON file not compliant with LDF format.", err);
+          }
+
+          // this event fires when the read operation completes
+          reader.onload = () => {
+            const resultData = reader.result;
+            if (resultData) {
+              try {
+                const importData = JSON.parse(resultData);
+                resolve(importData);
+              } catch (error) {
+                reject("Parsing failed", error);
+              }
+            } else {
+              reject("Parsing failed", error);
+            }
+          }
+        });
+      }
+
+      let vm;
+
+      // load YouTube API script
+      function onLoadJson() {
+        var tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        tag.id = "YouyubeSrcItem"
+        var firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      }
+
+      // create a YouTube player object
+      var player;
+
+      function onYouTubeIframeAPIReady() {
+        console.log("call onYouTubeIframeAPIReady!")
+        // create the global player from the specific iframe (#video)
+        player = new YT.Player('video1', {
+          events: {
+            // don't bind event
+          }
+        });
+        let time = setInterval(() => {
+          // determine the type of object
+          if (Object.prototype.toString.call(player.getDuration) == "[object Function]") {
+            clearInterval(time)
+            vm.$set(vm, "player", player.playerInfo)
+            vm.$set(vm, "duration", player.getDuration())
+          }
+        }, 100)
+      }
+      
+      // eliminate production tip
+      Vue.config.productionTip = false
+
+      // create Vue instance
+      vm = new Vue({
+          el: '#app',
+          data: {
+            defaultLDFurlList: [
+              './JSONFolder/A Dream of Splendor.json',
+              './JSONFolder/City of Streamer.json',
+              './JSONFolder/Empresses in the Palace.json',
+              './JSONFolder/The Journey of Flower.json',
+            ], // the default lesson description files' path
+            jsonData:[], // quiz questions data
+            dataList: [], // the array of valid json files
+            title: '', // video name
+            iframeVideoUrl: '', // embedded video URL
+            activeItem: null, // the currently selected json file
+            showResult: false, // by default, result-panel is not visible
+            showConfirm: false, // if discard the current score to change lesson
+            queData: {}, // set the initial value of quiz panel
+            index: 0, // the index of question in jsonData
+            duration: null, // the total duration of the currently playing video
+            player: {}, // the object of the currently playing video (player.playerInfo variable)
+            radio0: false, // user's choice
+            sjshow: null, // the array of questions that haven't been selected
+            sjle: 0, // the number of questions that haven't been selected
+            totalScore: 0, // the final score
+            activeShow: 'Home', // control the navigation bar selection effect and "Home" and "Library" page switching
+            quizOrder: '', // question order
+            reviewQuiz: false, // if display the history quiz
+          },
+          created () {
+            if (location.href.indexOf('Library=1') !== -1) {
+              this.activeShow = 'Library'
+            }
+            this.defaultLDFurlList.forEach(item => {
+              axios({
+                url: item,
+                method: 'GET'
+              }).then(r => {
+                this.dataList.push(r.data)
+              })
+            })
+          },
+          watch: {
+            // monitor progress bar changes
+            'player.currentTime' () {
+              if (this.noWatchCurrentTime) return
+              let sjshow = this.jsonData.filter(item => {
+                return (this.player.currentTime > item.timestamp) && !item.isShow
+              }) 
+              
+              let quizResultShow;
+              // if click the "previous" or "next" button, filter out all completed questions and their corresponding index in jsonData
+              if (this.reviewQuiz) {
+                quizResultShow = this.jsonData.filter((item, index) => {
+                  console.log((this.player.currentTime, item.timestamp), index, this.quizOrder)
+                  return (this.player.currentTime > item.timestamp) && index == this.quizOrder
+                })
+              } else {
+                quizResultShow = this.jsonData.filter(item => {
+                  return (this.player.currentTime > item.timestamp)
+                })
+                // if there are questions that have been answered
+                if (quizResultShow.length) {
+                this.quizOrder = this.jsonData.indexOf(quizResultShow[quizResultShow.length - 1])
+                }
+              }
+              // if there are questions, it means that the array of to-be-do questions is not empty
+              if (sjshow.length) {
+                  sjshow.forEach(item => item.isShow = true)
+                  this.sjshow = sjshow
+                  this.sjle = sjshow.length
+                  document.getElementById("quiz-panel").style.display = "block"
+                  setTimeout(function() {
+                    player.pauseVideo();
+                  }, 1000);
+              } else { // all quiz questions have been answered
+                if (quizResultShow.length && this.reviewQuiz) { // if click the "previous" or "next" button
+                  this.reviewQuiz = false
+                  document.getElementById("review-panel").style.display = "block"
+                  setTimeout(function() {
+                    player.pauseVideo();
+                  }, 1000);
+                }
+              }
+              // at the end of the video, to show the final score
+              if ((this.duration - 1) < this.player.currentTime) {
+                this.showResult = true
+              }
+            }
+          },
+          methods: {
+            close () {
+              document.getElementById("review-panel").style.display = "none";
+              player.playVideo();
+            },
+            // define a function to control switching quiz question
+            selectQuiz (i) {
+              this.reviewQuiz = false
+              if (this.player.currentTime < this.jsonData[0].timestamp && i == -1) { // at the first quiz
+                alert('The current quiz question is the first question!')
+                return
+              } else if (this.quizOrder == this.jsonData.length && i == 1) { // at the last quiz
+                alert('The current quiz question is the last question!')
+                return
+              }
+              // back to previous quiz
+              if (this.player.currentTime < this.jsonData[this.quizOrder].timestamp && i == -1) {
+                this.quizOrder += i
+              }
+              // forward to next quiz
+              if (this.player.currentTime > this.jsonData[this.quizOrder].timestamp && i == 1) {
+                this.quizOrder += i
+              }
+              // if user has answered the quiz question, display the review panel
+              if (!isNaN(this.jsonData[this.quizOrder].selectValue)) {
+                this.reviewQuiz = true
+              }
+              player.seekTo(this.jsonData[this.quizOrder].timestamp - 3)
+            },
+            // access the input area to allow users to load folder using Tab key
+            openInput (event) {
+              console.log(event)
+              event.target.children[0].click()
+            },
+            // access each video using Tab key
+            chooseItem (event) {
+              console.log(event)
+              event.target.click()
+            },
+            // define a function to display the selected video
+            showItem (e, index) {
+              // if the lesson clicked by the user is the currently selected lesson, the following code is no longer executed
+              if (index == this.activeItem) return
+
+              this.zcactiveItem = index // the index of the temporarily selected lesson in "dataList" (the array of valid json files)
+              this.zcItem = e // JSON data of temporarily selected lesson
+              
+              // if there is a currently selected lesson
+              if (this.activeItem !== null) {
+                this.showConfirm = true // modal alert appears when user clicks on a different lesson card
+              } else {
+                this.goItemOk() // jump to new lesson page
+              }
+            },
+            // user cancels switching lesson and remains on the currently selected lesson page
+            goItemCancel () {
+              this.showConfirm = false // hide the confirm panel
+              this.zcactiveItem = null // the temporarily selected lesson does not exist
+              this.zcItem = null // the temporarily selected lesson does not exist
+            },
+            // user confirms that quiz scores for the currently selected lesson are discarded for switching lesson
+            goItemOk () {
+              this.showConfirm = false // hide the confirm panel
+              this.activeItem = this.zcactiveItem // use the index of temporarily selected lesson as the index of new currently selected lesson
+              this.noWatchCurrentTime = true // start monitoring the current time
+              this.player.currentTime = 0 // reset the current time
+              this.totalScore = 0 // reset the quiz score
+              this.index = 0 // quiz questions will start with the first question
+              let isOneClickItem = this.jsonData.length == 0 // "isOneClickItem" is used to determine whether it is the first click on the lesson; "this.jsonData.length == 0" means that the jsonData in the Vue instance data is still an empty array => the lesson description file has not been parsed
+              let res = JSON.parse(JSON.stringify(this.zcItem)) // parse the JSON file of the selected lesson
+              // assign a value to the jsonData property
+              for(let key in res) {
+                this.$set(this, key, res[key])
+              }
+              this.quizOrder = 0
+              // set the "isShow" key for each quiz question saved in the jsonData object, with a value of false. that is, in the beginning all quizzes were not displayed
+              this.jsonData.forEach(item => {
+                vm.$set(item, "isShow", false)
+              })
+              this.queData = this.jsonData[0] // render data on the quiz panel starting from the first quiz question
+              this.$nextTick(()=>{
+                // if the user selects the lesson for the first time
+                if (isOneClickItem) {
+                  onLoadJson() //Load YouTube API
+                  this.noWatchCurrentTime = false // start monitoring the current time
+                  return
+                }
+                let time = setTimeout(() => {
+                  // reset the total duration and current time of the lesson
+                  if (player && player.getDuration && player.getDuration() !== this.duration) {
+                    vm.$set(vm, "duration", player.getDuration())
+                    vm.$set(vm, "player", player.playerInfo)
+                    // enable watch to monitor the current time after 2s
+                    setTimeout(()=>{
+                      this.noWatchCurrentTime = false
+                    }, 2000)
+                  }
+                }, 4000)
+              })
+            },
+            // define a function to access json file
+            async httpJSON (e) {
+              // after clicking the "START LESSON" button, reselect the folder to get LDFs, so the "dataList" needs to be reset
+              let str = []
+              // if the file contains the necessary values, it is a valid lesson description file, so add it to "dataList"
+              for (let key in e.target.files) {
+                try {
+                  let res = await importFileJSON(e.target.files[key])
+                  if (res.title && res.iframeVideoUrl && res.level && res.jsonData) {
+                    this.dataList.push(res)
+                  }
+                } catch(err) {
+                  str.push(err.title + ':' + err.content)
+                }
+              }
+              this.activeShow = 'Get started' // jump to "Get started" page
+              alert(str.join('\n'))
+              return false
+            },
+            // define a function for "Continue" button
+            calQueData() {
+              console.log(this.radio0)
+              if (!(this.radio0 + "")) return
+              if (this.sjshow && this.sjshow.length && this.sjshow.length != 1) {
+                let popItem = this.sjshow.pop()
+                console.log(popItem , "popItem")
+                this.$set(popItem, "selectValue", this.radio0)
+                this.checkAnswer();
+                return
+              }
+              this.$set(this.sjshow[0], "selectValue", this.radio0)
+              document.getElementById("quiz-panel").style.display = "none";
+              this.checkAnswer();
+              player.playVideo();
+            },
+            // define a function to calculate score
+            checkAnswer() {
+              console.log(this.radio0, this.jsonData[this.index].correctAnswer)
+              if (this.radio0 == this.jsonData[this.index].correctAnswer) {
+                this.totalScore = this.totalScore + this.jsonData[this.index].gradingWeights;
+              }
+              if (this.index < this.jsonData.length - 1) {
+                this.index++;
+                this.queData = this.jsonData[this.index];
+              }
+              console.log(this.sjshow)
+              this.resetRadio();
+              console.log(this.totalScore)
+            },
+            // define a function to reset and initialize radio button
+            resetRadio() {
+              this.radio0 = "";
+            }
+          },
+      })
+
+    </script>
+    <script src="index.js"></script>
+  </body>
+</html>
